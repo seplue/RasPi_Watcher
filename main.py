@@ -20,9 +20,9 @@ while True:
 
     # print(av_text)
     if av_text != 'Verfügbarkeit: Zur Zeit nicht an Lager':
-        print('Its available at https://www.pi-shop.ch/raspberry-pi-zero-2-w?src=raspberrypi!')
+        print(f'Its available at {url}!')
     if av_text == 'Verfügbarkeit: Zur Zeit nicht an Lager':
-        # print('Its not available at pi-shop.ch')
+        # print(f'Its not available at {url}')
         pass
 
     # berrybase.ch
@@ -38,9 +38,9 @@ while True:
 
     # print(av_text)
     if av_text != ' Dieser Artikel steht derzeit nicht zur Verfügung! ':
-        print('Its available at https://www.berrybase.ch/detail/index/sArticle/9202?src=raspberrypi!')
+        print(f'Its available at {url}!')
     if av_text == ' Dieser Artikel steht derzeit nicht zur Verfügung! ':
-        # print('Its not available at berrybase.ch')
+        # print(f'Its not available at {url}')
         pass
 
     # welectron.com
@@ -55,18 +55,18 @@ while True:
     print('bei welectron:', end='\r')
     status_0 = soup.find('span', class_='status status-0')
     if status_0:
-        # print(status_0.text)
+        # print(f'It is "{status_0.text}" at {url}')
         pass
     status_1 = soup.find('span', class_='status status-1')
     if status_1:
-        # print(status_1.text)
+        # print(f'It is "{status_1.text}" at {url}')
         pass
     status_2 = soup.find('span', class_='status status-2')
     if status_2:
-        print(status_2.text)
+        print(f'It is "{status_2.text}" at {url}')
 
     t = time.localtime()
     current_time = time.strftime("%H:%M:%S", t)
-    print('\r' + current_time, end='')
+    print(f'\r{current_time}', end='')
 
     time.sleep(60)
