@@ -9,6 +9,7 @@ print('Last checked:')
 
 while True:
     # pi-shop.ch
+    # status reminder per email rpiz2w
     url_pishop_zero2 = 'https://www.pi-shop.ch/raspberry-pi-zero-2-w?src=raspberrypi'
     url_pishop_control = 'https://www.pi-shop.ch/raspberry-pi-zero-2-w-starter-kit'
     url = url_pishop_zero2
@@ -16,6 +17,7 @@ while True:
     source = requests.get(url).text
     soup = BeautifulSoup(source, 'lxml')
 
+    # av_text = soup.find('p', class_='availability').text
     av_text = soup.find('p', class_='availability').text
 
     # print(av_text)
@@ -26,6 +28,7 @@ while True:
         pass
 
     # berrybase.ch
+    # status reminder per email rpiz2w
     url_berrybase_zero2 = 'https://www.berrybase.ch/detail/index/sArticle/9202?src=raspberrypi'
     url_berrybase_control = ''
     url = url_berrybase_zero2
@@ -44,6 +47,7 @@ while True:
         pass
 
     # welectron.com
+    # status reminder per email rpiz2w
     url_welectron_na = 'https://www.welectron.com/Raspberry-Pi-Zero-W-mit-loser-Stiftleiste'  # status 0 = not available
     url_welectron_zero2 = 'https://www.welectron.com/Raspberry-Pi-Zero-2-W'  # status 1 = on the way
     url_welectron_a = 'https://www.welectron.com/Raspberry-Pi-Pico'  # status 2 = available
@@ -64,6 +68,10 @@ while True:
     status_2 = soup.find('span', class_='status status-2')
     if status_2:
         print(f'It is "{status_2.text}" at {url}')
+
+    # digitec.ch
+    # status reminder per email rpiz2w
+    url_digitec = 'https://www.digitec.ch/de/s1/product/raspberry-pi-zero-2-w-cortex-a53-entwicklungsboard-kit-17346864?supplier=406802' # noqa
 
     t = time.localtime()
     current_time = time.strftime("%H:%M:%S", t)
