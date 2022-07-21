@@ -5,8 +5,32 @@ import re
 
 
 class Shop:
-    url_product = ''
-    pass
+    soup = ''
+    av_text = ''
+    text_not_available = ''
+
+    def __init__(self, url):
+        self.url = url
+
+    def get_soup(self):
+        source = requests.get(self.url).text
+        self.soup = BeautifulSoup(source, 'lxml')
+
+    def make_av_text(self):
+        pass  # will be overwritten by child class, is (for now) specific to child class
+
+    def compare_av_negative(self):
+        # todo compare also to text_available to be more sure of it's availability
+        if self.av_text != self.text_not_available:
+            print(f'It is available at {self.url}!')
+        if self.av_text == self.text_not_available:
+            print(f'It is not available at {self.url}')
+            pass
+
+    def ask(self):
+        self.get_soup()
+        self.make_av_text()
+        self.compare_av_negative()
 
 
 class ShopDigitec(Shop):
@@ -18,28 +42,16 @@ class ShopDigitec(Shop):
 class Pishop(Shop):
     text_not_available = 'Verfügbarkeit: Zur Zeit nicht an Lager'
 
-    def __init__(self, url):
-        self.url = url
-        self.av_text = ''
-
-    def create_soup(self):
-        source = requests.get(self.url).text
-        soup = BeautifulSoup(source, 'lxml')
-        self.av_text = soup.find('p', class_='availability').text
-
-    def compare_av_negative(self):
-        if self.av_text != self.text_not_available:
-            print(f'It is available at {self.url}!')
-        if self.av_text == self.text_not_available:
-            print(f'It is not available at {self.url}')
-            pass
-
-    def ask(self):
-        self.create_soup()
-        self.compare_av_negative()
+    def make_av_text(self):
+        self.av_text = self.soup.find('p', class_='availability').text
+        if self.av_text == '':
+            print('av_text is empty! Has it not been found?')  # todo replace with assert, try or throw error
 
 
 if __name__ == '__main__':
     print("I'm main")
     my_pishop = Pishop('https://www.pi-shop.ch/raspberry-pi-zero-2-w')
     my_pishop.ask()
+
+    my_p_pishop = Pishop('https://www.pi-shop.ch/raspberry-pi-zero-2-w-starter-kit')
+    my_p_pishop.ask()
