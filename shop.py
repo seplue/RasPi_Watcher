@@ -48,6 +48,16 @@ class Pishop(Shop):
             print('av_text is empty! Has it not been found?')  # todo replace with assert, try or throw error
 
 
+class Berrybase(Shop):
+    text_not_available = ' Dieser Artikel steht derzeit nicht zur Verfügung! '
+
+    def make_av_text(self):
+        product = self.soup.find('div', class_='content product--details')
+        self.av_text = product.find('div', class_='alert--content').text
+        if self.av_text == '':
+            print('av_text is empty! Has it not been found?')  # todo replace with assert, try or throw error
+
+
 if __name__ == '__main__':
     print("I'm main")
     my_pishop = Pishop('https://www.pi-shop.ch/raspberry-pi-zero-2-w')
@@ -55,3 +65,11 @@ if __name__ == '__main__':
 
     my_p_pishop = Pishop('https://www.pi-shop.ch/raspberry-pi-zero-2-w-starter-kit')
     my_p_pishop.ask()
+
+    my_berrybase = Berrybase('https://www.berrybase.ch/detail/index/sArticle/9202')
+    my_berrybase.ask()
+
+    my_berrybase = Berrybase('https://www.berrybase.ch/dht22-digitaler-temperatur-und-luftfeuchtesensor?c=98')
+    my_berrybase.ask()
+
+
